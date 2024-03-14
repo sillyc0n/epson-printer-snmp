@@ -138,7 +138,7 @@ class Session(easysnmp.Session):
 
     def write_eeprom(self: "Session", oid: int, value: int) -> None:
         """Write value to OID with specified type to EEPROM."""
-        print(f"{self.get_write_eeprom_oid(oid, value)}")
+        # print(f"{self.get_write_eeprom_oid(oid, value)}")
         self.get(self.get_write_eeprom_oid(oid, value))
 
     def dump_eeprom(self: "Session", start: int = 0, end: int = 0xFF) -> dict[int, int]:
@@ -158,11 +158,10 @@ class Session(easysnmp.Session):
 
     def get_serial_number(self: "Session") -> str:
         """Return serial number of printer."""
-        """ TODO: read oids for serial number from models.json """
         return "".join(
             chr(int(value, 16))
             for value in self.read_eeprom_many(
-                [216, 217, 218, 219, 220, 221, 222, 223, 224, 225]
+                self.printer.serial
             )
         )
 
@@ -197,7 +196,7 @@ class Session(easysnmp.Session):
         data = {16: 0, 17: 0, 52: 94, 20: 0, 21: 0, 18: 0, 19:0, 53:94}
         #data = {oid: 0 for waste_ink in self.printer.waste_inks for oid in waste_ink["oids"]}
         for oid, value in data.items():
-            print(f"oid: {oid}, value: {value}")
+            # print(f"oid: {oid}, value: {value}")
             self.write_eeprom(oid, value)
 
     def brute_force(
