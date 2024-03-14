@@ -1,12 +1,13 @@
 # epson-printer-snmp
 
-[![GitHub license](https://img.shields.io/github/license/Zedeldi/epson-printer-snmp?style=flat-square)](https://github.com/Zedeldi/epson-printer-snmp/blob/master/LICENSE) [![GitHub last commit](https://img.shields.io/github/last-commit/Zedeldi/epson-printer-snmp?style=flat-square)](https://github.com/Zedeldi/epson-printer-snmp/commits) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
+[![GitHub license](https://img.shields.io/github/license/sillyc0n/epson-printer-snmp?style=flat-square)](https://github.com/sillyc0n/epson-printer-snmp/blob/master/LICENSE) [![GitHub last commit](https://img.shields.io/github/last-commit/sillyc0n/epson-printer-snmp?style=flat-square)](https://github.com/sillyc0n/epson-printer-snmp/commits) [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
+
+This is a fork of [Zedeldi's Epson Printer SNMP](https://github.com/Zedeldi/epson-printer-snmp) with added support for XP-860.
 
 Read information and reset waste ink counters on Epson printers, using SNMP.
 
 ## Description
-
-This project was designed for a EPSON WF-7525 Series printer, but inspired by [projects](#resources) for other models.
+This project was designed for a EPSON ~~WF-7525~~ Series printer, but inspired by [projects](#resources) for other models.
 Hopefully, releasing this code will help save a printer from the trash and improve consumer repairability for these devices.
 Information about specific models is stored in `models.json`, as a dictionary.
 Feel free to raise an issue/pull request for adding support for another model of printer, with logs from `wicreset` or similar attached.
@@ -63,10 +64,3 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 [![GPL v3 Logo](https://www.gnu.org/graphics/gplv3-127x51.png)](https://www.gnu.org/licenses/gpl-3.0-standalone.html)
 
-## Donate
-
-If you found this project useful, please consider donating. Any amount is greatly appreciated! Thank you :smiley:
-
-[![PayPal](https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-150px.png)](https://paypal.me/ZackDidcott)
-
-My bitcoin address is: [bc1q5aygkqypxuw7cjg062tnh56sd0mxt0zd5md536](bitcoin://bc1q5aygkqypxuw7cjg062tnh56sd0mxt0zd5md536)
