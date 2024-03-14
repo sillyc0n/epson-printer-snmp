@@ -55,6 +55,7 @@ class Printer:
     eeprom_write: str
     ink_levels: dict[str, int]
     waste_inks: list[dict]
+    serial: list[int]
 
     def __post_init__(self: "Printer") -> None:
         """Initialise printer instance with a session."""
@@ -116,7 +117,7 @@ class Session(easysnmp.Session):
             f".{self.printer.password[1]}"
             ".66.189.33"
             f".{oid}.0.{value}"
-            ".{self.printer.eeprom_write}"
+            f".{self.printer.eeprom_write}"
         )
 
     def read_eeprom(self: "Session", oid: int) -> str:
@@ -137,6 +138,7 @@ class Session(easysnmp.Session):
 
     def write_eeprom(self: "Session", oid: int, value: int) -> None:
         """Write value to OID with specified type to EEPROM."""
+        print(f"{self.get_write_eeprom_oid(oid, value)}")
         self.get(self.get_write_eeprom_oid(oid, value))
 
     def dump_eeprom(self: "Session", start: int = 0, end: int = 0xFF) -> dict[int, int]:
@@ -156,10 +158,11 @@ class Session(easysnmp.Session):
 
     def get_serial_number(self: "Session") -> str:
         """Return serial number of printer."""
+        """ TODO: read oids for serial number from models.json """
         return "".join(
             chr(int(value, 16))
             for value in self.read_eeprom_many(
-                [192, 193, 194, 195, 196, 197, 198, 199, 200, 201]
+                [216, 217, 218, 219, 220, 221, 222, 223, 224, 225]
             )
         )
 
@@ -191,8 +194,10 @@ class Session(easysnmp.Session):
         hex(int((80 / 100) * 19650)) == 0x3d68
         hex(104), hex(61) = (0x68, 0x3d)
         """
-        data = {20: 0, 21: 0, 22: 0, 23: 0, 24: 0, 25: 0, 59: 0, 60: 94, 61: 94}
+        data = {16: 0, 17: 0, 52: 94, 20: 0, 21: 0, 18: 0, 19:0, 53:94}
+        #data = {oid: 0 for waste_ink in self.printer.waste_inks for oid in waste_ink["oids"]}
         for oid, value in data.items():
+            print(f"oid: {oid}, value: {value}")
             self.write_eeprom(oid, value)
 
     def brute_force(
@@ -230,3 +235,6 @@ if __name__ == "__main__":
     printer = Printer.from_model(host, model)
     session = Session(printer)
     pprint(printer.stats)
+
+    # Use at own risk - the values have been hardcoded to reset XP-860 counters to 0
+    # session.reset_waste_ink_levels()
